@@ -31,30 +31,46 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Editar Cliente"),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: "Nombre Completo"),
-                controller: TextEditingController(text: nombre),
-                onChanged: (v) => nombre = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(labelText: "Teléfono"),
-                keyboardType: TextInputType.phone,
-                controller: TextEditingController(text: telefono),
-                onChanged: (v) => telefono = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(labelText: "Dirección"),
-                controller: TextEditingController(text: direccion),
-                onChanged: (v) => direccion = v,
-              ),
-            ],
+        title: const Text("Editar Cliente", style: TextStyle(fontWeight: FontWeight.bold)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: SizedBox(
+          width: 400,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Nombre Completo",
+                    prefixIcon: const Icon(Icons.person_outline),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  controller: TextEditingController(text: nombre),
+                  onChanged: (v) => nombre = v,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Teléfono",
+                    prefixIcon: const Icon(Icons.phone_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  controller: TextEditingController(text: telefono),
+                  onChanged: (v) => telefono = v,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Dirección",
+                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  controller: TextEditingController(text: direccion),
+                  onChanged: (v) => direccion = v,
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -62,7 +78,10 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
             onPressed: () => Navigator.pop(context),
             child: const Text("CANCELAR"),
           ),
-          ElevatedButton(
+          FilledButton(
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
             onPressed: () {
               if (nombre.trim().isNotEmpty && telefono.trim().isNotEmpty) {
                 final cModificado = cliente.copyWith(
@@ -113,27 +132,43 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Nuevo Cliente"),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: "Nombre Completo"),
-                onChanged: (v) => nombre = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(labelText: "Teléfono"),
-                keyboardType: TextInputType.phone,
-                onChanged: (v) => telefono = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(labelText: "Dirección"),
-                onChanged: (v) => direccion = v,
-              ),
-            ],
+        title: const Text("Nuevo Cliente", style: TextStyle(fontWeight: FontWeight.bold)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: SizedBox(
+          width: 400,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Nombre Completo",
+                    prefixIcon: const Icon(Icons.person_outline),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onChanged: (v) => nombre = v,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Teléfono",
+                    prefixIcon: const Icon(Icons.phone_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  onChanged: (v) => telefono = v,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Dirección",
+                    prefixIcon: const Icon(Icons.location_on_outlined),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onChanged: (v) => direccion = v,
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -141,7 +176,10 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
             onPressed: () => Navigator.pop(context),
             child: const Text("CANCELAR"),
           ),
-          ElevatedButton(
+          FilledButton(
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
             onPressed: () {
               if (nombre.trim().isNotEmpty && telefono.trim().isNotEmpty) {
                 context.read<ClientesProvider>().agregarCliente(nombre, telefono, direccion);
@@ -176,8 +214,11 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
         icon: const Icon(Icons.person_add),
         label: const Text("Nuevo Cliente"),
       ),
-      body: Column(
-        children: [
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800),
+          child: Column(
+            children: [
           Container(
             padding: const EdgeInsets.all(16),
             width: double.infinity,
@@ -185,20 +226,34 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  children: [
-                    const Text("Prestado", style: TextStyle(color: Colors.grey)),
-                    Text(_currencyFormat.format(prestamosProvider.dineroTotalPrestado), 
-                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.amberAccent)),
-                  ],
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text("Prestado", style: TextStyle(color: Colors.grey)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: FittedBox(
+                          child: Text(_currencyFormat.format(prestamosProvider.dineroTotalPrestado), 
+                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.amberAccent)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Container(width: 1, height: 40, color: Colors.grey[700]),
-                Column(
-                  children: [
-                    const Text("Recogido", style: TextStyle(color: Colors.grey)),
-                    Text(_currencyFormat.format(prestamosProvider.dineroTotalRecogido), 
-                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.greenAccent)),
-                  ],
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text("Recogido", style: TextStyle(color: Colors.grey)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: FittedBox(
+                          child: Text(_currencyFormat.format(prestamosProvider.dineroTotalRecogido), 
+                               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.greenAccent)),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -258,6 +313,8 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
@@ -310,6 +367,8 @@ class _PrestamosScreenState extends State<PrestamosScreen> {
                 ),
           ),
         ],
+          ),
+        ),
       ),
     );
   }

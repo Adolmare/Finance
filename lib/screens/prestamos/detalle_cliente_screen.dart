@@ -36,39 +36,48 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Registrar Nuevo Préstamo"),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: "Monto a prestar",
-                  prefixText: "\$ ",
+        title: const Text("Registrar Nuevo Préstamo", style: TextStyle(fontWeight: FontWeight.bold)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: SizedBox(
+          width: 400,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Monto a prestar",
+                    prefixIcon: const Icon(Icons.attach_money),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  onChanged: (v) => montoStr = v,
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                onChanged: (v) => montoStr = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: "Plazo (Semanas)",
-                  suffixText: "semanas",
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Plazo",
+                    suffixText: "semanas",
+                    prefixIcon: const Icon(Icons.date_range),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  keyboardType: TextInputType.number,
+                  onChanged: (v) => semanasStr = v,
                 ),
-                keyboardType: TextInputType.number,
-                onChanged: (v) => semanasStr = v,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: "Interés (%)",
-                  suffixText: "%",
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Interés",
+                    suffixText: "%",
+                    prefixIcon: const Icon(Icons.percent),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  controller: TextEditingController(text: interesStr),
+                  onChanged: (v) => interesStr = v,
                 ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                controller: TextEditingController(text: interesStr),
-                onChanged: (v) => interesStr = v,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         actions: [
@@ -76,7 +85,10 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
             onPressed: () => Navigator.pop(context),
             child: const Text("CANCELAR"),
           ),
-          ElevatedButton(
+          FilledButton(
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
             onPressed: () {
               final monto = double.tryParse(montoStr) ?? 0;
               final semanas = int.tryParse(semanasStr) ?? 0;
@@ -214,8 +226,11 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
         icon: const Icon(Icons.monetization_on),
         label: const Text("Nuevo Préstamo"),
       ),
-      body: CustomScrollView(
-        slivers: [
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800),
+          child: CustomScrollView(
+            slivers: [
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -289,9 +304,13 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Préstamo ${_currencyFormat.format(prestamo.monto)}",
-                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    Flexible(
+                                      child: Text(
+                                        "Préstamo ${_currencyFormat.format(prestamo.monto)}",
+                                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     Row(
                                       children: [
@@ -437,6 +456,8 @@ class _DetalleClienteScreenState extends State<DetalleClienteScreen> {
                   ),
                 ),
         ],
+          ),
+        ),
       ),
     );
   }

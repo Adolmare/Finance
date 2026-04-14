@@ -53,15 +53,18 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-              color: Theme.of(context).cardColor.withOpacity(0.9),
-              child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 400),
+                child: Card(
+                  elevation: 8,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                  color: Theme.of(context).cardColor.withOpacity(0.9),
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
@@ -123,6 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            ),
+          ),
           ),
         ),
       ),
